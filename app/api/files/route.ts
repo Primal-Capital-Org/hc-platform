@@ -23,7 +23,8 @@ export async function POST(req: NextRequest) {
   if (!f) return NextResponse.json({ error: 'Invalid file' }, { status: 400 })
   const { rows } = await sql`
     INSERT INTO files (name, owner, stage, priority, keywords)
-    VALUES (${f.name}, ${f.owner}, ${f.stage}, ${f.priority}, ${f.keywords})
+   VALUES (${f.name}, ${f.owner}, ${f.stage}, ${f.priority}, ${f.keywords.join(',')})
     RETURNING *`
   return NextResponse.json(rows[0], { status: 201 })
 }
+

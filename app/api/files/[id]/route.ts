@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   if (!f) return NextResponse.json({ error: 'Invalid file' }, { status: 400 })
   const { rows } = await sql`
     UPDATE files SET name=${f.name}, owner=${f.owner}, stage=${f.stage},
-      priority=${f.priority}, keywords=${f.keywords}, updated_at=NOW()
+priority=${f.priority}, keywords=${f.keywords.join(',')}, updated_at=NOW()
     WHERE id=${params.id} RETURNING *`
   if (!rows[0]) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(rows[0])
