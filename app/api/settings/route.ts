@@ -7,8 +7,17 @@ import { initDb } from '@/lib/db'
 
 export async function GET() {
   // Ensure DB is initialised and passcode exists
-  try { await initDb() } catch { /* already exists */ }
-  await ensurePasscode()
+  try {
+    await initDb()
+  } catch (e) {
+    return NextResponse.json({ error: 'initDb failed', detail: String(e) }, { status: 500 })
+  }
+
+  try {
+    await ensurePasscode()
+  } catch (e) {
+    return NextResponse.json({ error: 'ensurePasscode failed', detail: String(e) }, { status: 500 })
+  }
 
   const icsUrl = await getSetting('ics_url')
   const passcode = await getSetting('passcode')
