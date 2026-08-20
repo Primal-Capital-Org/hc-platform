@@ -1,6 +1,18 @@
-import { sql } from '@vercel/postgres'
+import { neon } from '@neondatabase/serverless'
 
-export { sql }
+const _sql = neon(
+  process.env.hc_platform_POSTGRES_URL ||
+  process.env.POSTGRES_URL ||
+  ''
+)
+
+export async function sql(
+  strings: TemplateStringsArray,
+  ...values: unknown[]
+): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
+  const rows = (await _sql(strings, ...values)) as Record<string, unknown>[]
+  return { rows, rowCount: rows.length }
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
