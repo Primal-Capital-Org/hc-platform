@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { sql, isoWeekId } from '@/lib/db'
 import { classifyText } from '@/lib/classify'

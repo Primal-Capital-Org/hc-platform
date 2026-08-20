@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextResponse } from 'next/server'
 import { getSetting } from '@/lib/db'
 import { fetchCalendar } from '@/lib/ics'
